@@ -1,0 +1,26 @@
+package com.vidal.sandbox.statelessvxp.pojo.protbufgen;
+message FullTypesModel {
+	repeated SimpleModel arrayCOBJ = 1;
+	enum SimpleEnum {
+		ENUM1 = 0;
+		ENUM2 = 1;
+	 }
+	repeated SimpleEnum arrayENUM = 2;
+	repeated string arrayOBJ = 3;
+	repeated int64 arrayType = 4;
+	required bool boolType=5;
+	required bool booleanOBJ=6;
+	repeated SimpleModel collListCOBJ = 7;
+	repeated SimpleEnum collListEnum = 8;
+	repeated int64 collListOBJ = 9;
+	required double doubleType=10;
+	required SimpleEnum enumCOBJ = 11;
+	required int64 intType=12;
+	required SimpleModel simpleCOBJ = 13;
+	required string stringOBJ=14;
+ }
+
+message SimpleModel {
+	required string name=1;
+	required double version=2;
+ }

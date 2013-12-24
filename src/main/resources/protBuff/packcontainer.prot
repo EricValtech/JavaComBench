@@ -1,0 +1,136 @@
+package com.vidal.sandbox.statelessvxp.pojo.protbufgen;
+message PackContainer {
+	repeated Pack list = 1;
+ }
+
+message Pack {
+	enum ActCode {
+		ActCode_AAD = 0;
+		ActCode_AAR = 1;
+		ActCode_MAC = 2;
+		ActCode_MAD = 3;
+		ActCode_OPT = 4;
+		ActCode_ORC = 5;
+		ActCode_PA = 6;
+		ActCode_PAN = 7;
+		ActCode_PEX = 8;
+		ActCode_PH1 = 9;
+		ActCode_PH4 = 10;
+		ActCode_PH7 = 11;
+		ActCode_PHN = 12;
+		ActCode_PII = 13;
+		ActCode_VEH = 14;
+		ActCode_PMR = 15;
+		ActCode_ARO = 16;
+		ActCode_GLU = 17;
+		ActCode_PAU = 18;
+		ActCode_PH2 = 19;
+		ActCode_PME = 20;
+		ActCode_TNS = 21;
+		ActCode_VER = 22;
+		ActCode_LEN = 23;
+		ActCode_LUN = 24;
+		ActCode_POC = 25;
+		ActCode_PG7 = 26;
+		ActCode_PDM = 27;
+		ActCode_PMH = 28;
+		ActCode_DVO = 29;
+	 }
+	required ActCode actCode = 1;
+	required string cip=2;
+	required string cip13=3;
+	required string cis=4;
+	required bool communityAgrement=5;
+	enum DispensationPlace {
+		DispensationPlace_HOSPITAL = 0;
+		DispensationPlace_PHARMACY = 1;
+		DispensationPlace_NOT_HOMOGENEOUS = 2;
+	 }
+	required DispensationPlace dispensationPlace = 6;
+	required string dose=7;
+	required string doseUnit=8;
+	required bool drugInSport=9;
+	required string ean=10;
+	enum GenericType {
+		GenericType_GENERIC = 0;
+		GenericType_REFERENT = 1;
+		GenericType_NULL = 2;
+	 }
+	required GenericType genericType = 11;
+	required int64 id=12;
+	enum ListType {
+		ListType_I = 0;
+		ListType_II = 1;
+		ListType_NARCOTIC = 2;
+		ListType_NULL = 3;
+		ListType_NOT_HOMOGENEOUS = 4;
+	 }
+	required ListType list = 13;
+	required float manufacturerPrice=14;
+	enum MarketStatus {
+		MarketStatus_AVAILABLE = 0;
+		MarketStatus_DELETED = 1;
+		MarketStatus_PHARMACO = 2;
+		MarketStatus_NEW = 3;
+		MarketStatus_DELETED_ONEYEAR = 4;
+		MarketStatus_PHARMACO_ONEYEAR = 5;
+	 }
+	required MarketStatus marketStatus = 15;
+	enum PrescriptionDuration {
+		PrescriptionDuration_FOURTEEN_DAYS = 0;
+		PrescriptionDuration_TWENTY_EIGHT_DAYS = 1;
+		PrescriptionDuration_SEVEN_DAYS = 2;
+		PrescriptionDuration_EIGHTY_FOUR_DAYS = 3;
+		PrescriptionDuration_TWENTY_EIGHT_SPLITTED_IN_SEVEN_DAYS = 4;
+		PrescriptionDuration_TWENTY_EIGHT_SPLITTED_IN_FOURTEEN_DAYS = 5;
+		PrescriptionDuration_FOURTEEN_SPLITTED_IN_SEVEN_DAYS = 6;
+		PrescriptionDuration_NOT_HOMOGENEOUS = 7;
+	 }
+	required PrescriptionDuration maxPrescriptionDuration = 16;
+	required string name=17;
+	required bool narcoticPrescription=18;
+	required int64 offMarketDate=19;
+	required bool onFreeAccess=20;
+	required int64 onMarketDate=21;
+	required bool otc=22;
+	required float pharmacistPrice=23;
+	required float pricePerDose=24;
+	required int64 productId=25;
+	required float publicPrice=26;
+	required float refundingBase=27;
+	enum RefundRate {
+		RefundRate_LPPR = 0;
+		RefundRate_NR = 1;
+		RefundRate__15 = 2;
+		RefundRate__35 = 3;
+		RefundRate__65 = 4;
+		RefundRate__100 = 5;
+		RefundRate_UNSPECIFIED = 6;
+		RefundRate_NOT_HOMOGENEOUS = 7;
+	 }
+	required RefundRate refundingRate = 28;
+	required bool safetyAlert=29;
+	required string shortName=30;
+	required bool tfr=31;
+	enum ProductType {
+		ProductType_VIDAL = 0;
+		ProductType_DIETETIC = 1;
+		ProductType_VETERINARY = 2;
+		ProductType_NON_PHARMACEUTICAL = 3;
+		ProductType_ACCESSORY = 4;
+		ProductType_MISCELLANEOUS = 5;
+		ProductType_HOMEOPATHIC = 6;
+		ProductType_BALNEOLOGY = 7;
+	 }
+	required ProductType type = 32;
+	required float ucdPrice=33;
+	enum VatRate {
+		VatRate_NORMAL = 0;
+		VatRate_REDUCED = 1;
+		VatRate_SUPER_REDUCED = 2;
+		VatRate_HIGH = 3;
+	 }
+	required VatRate vatRate = 34;
+	required float vatRateValue=35;
+	required bool withoutPrescr=36;
+ }

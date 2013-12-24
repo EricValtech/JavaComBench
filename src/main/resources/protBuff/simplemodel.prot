@@ -1,0 +1,5 @@
+package com.vidal.sandbox.statelessvxp.pojo.protbufgen;
+message SimpleModel {
+	required string name=1;
+	required double version=2;
+ }

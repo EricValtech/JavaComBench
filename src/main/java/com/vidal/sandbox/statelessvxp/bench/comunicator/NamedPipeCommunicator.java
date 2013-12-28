@@ -9,6 +9,11 @@ public class NamedPipeCommunicator extends BenchCommunicator {
     public RandomAccessFile PIPE;
 
     @Override
+    public boolean startServer() {
+        return false; // temp hack has i got issue linking dll..
+    }
+
+    @Override
     public void startCommunication() throws Exception {
         if (getServerProcess() == null) { throw new RuntimeException("Server is down.. can't continue.."); }
         PIPE=  new RandomAccessFile(NamedPipeServerCommunicator.PIPE_NAME, "rw");

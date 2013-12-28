@@ -31,7 +31,7 @@ public class NamedPipeServerCommunicator {
     private boolean createPipe()
     {
         boolean ok = false;
-        namedPipeHandle = PipeWindowsJNI._Java_ibm_Pipes_CreateNamedPipe(pipeName,
+        namedPipeHandle = PipeWindowsJNI.CreateNamedPipe(pipeName,
                 0x00000003, 0x00000000, 2, pipeBuffer,
                 pipeBuffer, 0xffffffff, 0);
         if (namedPipeHandle == -1)

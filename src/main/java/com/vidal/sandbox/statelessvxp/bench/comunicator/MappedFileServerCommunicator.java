@@ -1,8 +1,6 @@
 package com.vidal.sandbox.statelessvxp.bench.comunicator;
 
 
-import com.vidal.sandbox.statelessvxp.util.NicePrinterHelper;
-
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -19,7 +17,7 @@ public class MappedFileServerCommunicator {
                 new RandomAccessFile(FILE_NAME, "rw").getChannel()
                         .map(FileChannel.MapMode.READ_WRITE, 0, FILE_SIZE);
         mem.rewind(); mem.putInt(SERVER_WAITING);mem.rewind();
-        System.out.println("Using file :"+FILE_NAME+ "    size:"+ NicePrinterHelper.printMemory(FILE_SIZE));
+        //System.out.println("Using file :"+FILE_NAME+ "    size:"+ NicePrinterHelper.printMemory(FILE_SIZE));
         while(true){
             int sizeToRead;
             mem.rewind();
@@ -27,7 +25,6 @@ public class MappedFileServerCommunicator {
             //somethink to read.. read it..
             byte[] readedBuff = new byte[sizeToRead];
             mem.get(readedBuff);
-            System.out.println("READ MEMORY : " + readedBuff.length);
 
             // sending the reply
             mem.rewind();

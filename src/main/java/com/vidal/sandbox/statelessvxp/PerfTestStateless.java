@@ -2,6 +2,7 @@ package com.vidal.sandbox.statelessvxp;
 
 
 import com.vidal.sandbox.statelessvxp.bench.comunicator.BenchCommunicator;
+import com.vidal.sandbox.statelessvxp.bench.rcp.BenchRCP;
 import com.vidal.sandbox.statelessvxp.bench.serialiser.BenchSerialiser;
 import com.vidal.sandbox.statelessvxp.pojo.PojoFactory;
 import com.vidal.sandbox.statelessvxp.pojo.factory.PackFactory;
@@ -23,9 +24,10 @@ public class PerfTestStateless
     private static CommandLine COMMAND_LINE=null;
     private static final Options OPTIONS = new Options();
     private static final Option OPT_HELP=new Option( "h","help",false, "print this message" );
-    private static final Option OPT_PROVIDERSERIAL=new Option( "ps","providerSerial",true, "provider for serialisation can be multiple (ie mp,pb) [default all]" );
-    private static final Option OPT_PROVIDERCOMMUNICATION=new Option( "pc","providerComm",true, "provider for communication can be multiple (ie so,mf,pi) [default all]" );
-    private static final Option OPT_SCENARIO=new Option( "s","scenario",true, "scenario can be multiple (ie se,co) [default all]" );
+    private static final Option OPT_PROVIDERSERIAL=new Option( "ps","providerSerial",true, "provider for serialisation can be multiple  [default all]" );
+    private static final Option OPT_PROVIDERCOMMUNICATION=new Option( "pc","providerComm",true, "provider for communication can be multiple  [default all]" );
+    private static final Option OPT_PROVIDERRCP=new Option( "rc","providerRCP",true, "provider for rcp can be multiple [default all]" );
+    private static final Option OPT_SCENARIO=new Option( "s","scenario",true, "scenario can be multiple  [default all]" );
     private static final Option OPT_NBPOJO=new Option( "n", "nbObjects",true,"The number of objects to serialise can be multiple (ie 10,10000) [default 1,10,100,1000,10000,100000]" );
     private static final Option OPT_FILENAME=new Option( "f", "file",true,"name to csv file to generate [default console (no file)]" );
 
@@ -33,6 +35,7 @@ public class PerfTestStateless
         OPTIONS.addOption(OPT_HELP);
         OPTIONS.addOption(OPT_PROVIDERSERIAL);
         OPTIONS.addOption(OPT_PROVIDERCOMMUNICATION);
+        OPTIONS.addOption(OPT_PROVIDERRCP);
         OPTIONS.addOption(OPT_SCENARIO);
         OPTIONS.addOption(OPT_NBPOJO);
         OPTIONS.addOption(OPT_FILENAME);
@@ -42,10 +45,12 @@ public class PerfTestStateless
     //Constants
     private static Map<String, Class<?>> PROVIDERSERIAL= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.bench.serialiser", BenchSerialiser.class);
     private static Map<String, Class<?>> PROVIDERCOM= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.bench.comunicator", BenchCommunicator.class);
+    private static Map<String, Class<?>> PROVIDERRCP= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.bench.rcp", BenchRCP.class);
 
     private static String SC_SERIALISE="se";
-    private static String SC_COMM="cp";
-    private static List<String> SCENARIOS= Arrays.asList( SC_COMM);
+    private static String SC_COMM="co";
+    private static String SC_RCP="rc";
+    private static List<String> SCENARIOS= Arrays.asList(SC_COMM,SC_SERIALISE, SC_RCP);
     private static List<Integer> NBPOJO= Arrays.asList(1,1,10,100,1000,10000,100000);
 
     private static String FILENAME= null;
@@ -68,6 +73,12 @@ public class PerfTestStateless
         System.out.println("Possible values for providerCom  (default all): ");
         for(String key : PROVIDERCOM.keySet()) {
             BenchCommunicator communicator = (BenchCommunicator)PROVIDERCOM.get(key).newInstance();
+            System.out.println("\t"+communicator.getShortName()+": "+communicator.getDescription());
+        }
+
+        System.out.println("Possible values for providerRcp  (default all): ");
+        for(String key : PROVIDERRCP.keySet()) {
+            BenchCommunicator communicator = (BenchCommunicator)PROVIDERRCP.get(key).newInstance();
             System.out.println("\t"+communicator.getShortName()+": "+communicator.getDescription());
         }
 
@@ -94,6 +105,9 @@ public class PerfTestStateless
         if (PROVIDERSERIAL==null) return false;
         PROVIDERCOM= commandLineExtractMapValue(OPT_PROVIDERSERIAL, PROVIDERCOM);
         if (PROVIDERCOM==null) return false;
+        PROVIDERRCP= commandLineExtractMapValue(OPT_PROVIDERRCP, PROVIDERRCP);
+        if (PROVIDERRCP==null) return false;
+
         SCENARIOS= commandLineExtractListValue(OPT_SCENARIO, SCENARIOS);
         if (SCENARIOS==null) return false;
 
@@ -166,11 +180,12 @@ public class PerfTestStateless
         //wirting app params.
         System.out.println("starting bench with params :");
         if (FILENAME != null) System.out.println("wrinting csv file: "+FILENAME);
-        else System.out.print("Log console.");
+        else System.out.println("Log console.");
         System.out.println("scenario: "+SCENARIOS);
         System.out.println("volume tests:"+NBPOJO);
         System.out.println("serialisation providers:"+PROVIDERSERIAL.keySet());
         System.out.println("communication providers:"+PROVIDERCOM.keySet());
+        System.out.println("rcp providers:"+PROVIDERRCP.keySet());
 
         System.out.println("STARTING TEST...");
         ChronoPerf chrono = new ChronoPerf();
@@ -189,31 +204,43 @@ public class PerfTestStateless
 
     private static void doBench(String scenario,ChronoPerf chrono) throws Exception {
         if (SC_SERIALISE.equals(scenario)) {doBenchSerialise(chrono);}
-
-        if (SC_COMM.equals(scenario)) {
-            for(String communicatorName : PROVIDERCOM.keySet()) {
-                Class <?> communicationClass= PROVIDERCOM.get(communicatorName);
-                BenchCommunicator communicator =  (BenchCommunicator)communicationClass.newInstance();
-                communicator.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
-                communicator.startServer();
-                communicator.startCommunication();
-                for(Integer nbPojo : NBPOJO ) {
-                    String chronoName = (communicator.getName());
-                    communicator.initObjects(nbPojo);
-                    chrono.start(chronoName);
-                    Object res = communicator.doBench(PackFactory.class,nbPojo);
-                    System.out.println("\t"+chronoName+" "+nbPojo+" : "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
-                    chrono.pause(chronoName);
-                    chrono.reset(chronoName);
-                }
-                communicator.stopCommunication();
-                communicator.stopServer();
-            }
-        }
+        if (SC_COMM.equals(scenario)) { doBenchCommunicator(chrono); }
+        if (SC_RCP.equals(scenario)) { doBenchRCP(chrono); }
         System.out.println();
     }
 
+    private static void doBenchCommunicator(ChronoPerf chrono) throws Exception {
+        if (PROVIDERCOM.keySet() ==null || PROVIDERCOM.keySet().size()==0) {
+            System.out.println("No communication provider found...");
+            return;
+        }
+        for(String communicatorName : PROVIDERCOM.keySet()) {
+            Class <?> communicationClass= PROVIDERCOM.get(communicatorName);
+            BenchCommunicator communicator =  (BenchCommunicator)communicationClass.newInstance();
+            communicator.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
+            if (! communicator.startServer() ) { System.out.println(communicator.getName()+"Test skipped server not launched"); continue;}
+            System.out.println("STARTING tests for "+communicator.getName()+"("+ communicator.getShortName()+") :"+communicator.getDescription());
+            communicator.startCommunication();
+            for(Integer nbPojo : NBPOJO ) {
+                String chronoName = (communicator.getName());
+                communicator.initObjects(nbPojo);
+                chrono.start(chronoName);
+                Object res = communicator.doBench(PackFactory.class,nbPojo);
+                System.out.println("\t"+chronoName+" "+nbPojo+" : "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer) res)+"]");
+                chrono.pause(chronoName);
+                chrono.reset(chronoName);
+            }
+            communicator.stopCommunication();
+            communicator.stopServer();
+            System.out.println();
+        }
+    }
+
     private static void doBenchSerialise(ChronoPerf chrono) throws Exception {
+        if (PROVIDERSERIAL.keySet() ==null || PROVIDERSERIAL.keySet().size()==0) {
+            System.out.println("No Serialization provider found...");
+            return;
+        }
         for(Integer nbPojo : NBPOJO ) {
             System.out.print("\nTime for " + FORMATTER.format(nbPojo) + " : ");
             for(String serialiserName : PROVIDERSERIAL.keySet()) {
@@ -225,6 +252,30 @@ public class PerfTestStateless
                 serialiser.initObjects(nbPojo);
                 chrono.start(chronoName);
                 Object res = serialiser.doBench(nbPojo);
+                chrono.pause(chronoName);
+                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
+                chrono.reset(chronoName);
+            }
+        }
+    }
+
+    private static void doBenchRCP(ChronoPerf chrono) throws Exception {
+        if (PROVIDERRCP.keySet() ==null || PROVIDERRCP.keySet().size()==0) {
+            System.out.println("No RCP provider found...");
+            return;
+        }
+        for(Integer nbPojo : NBPOJO ) {
+            System.out.print("\nTime for " + FORMATTER.format(nbPojo) + " : ");
+            for(String serialiserName : PROVIDERRCP.keySet()) {
+                Class <?> serialiserClass= PROVIDERRCP.get(serialiserName);
+                BenchRCP rcp= (BenchRCP)serialiserClass.newInstance();
+                rcp.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
+                //rcp.warmup();
+                String chronoName = (rcp.getName());
+                rcp.initObjects(nbPojo);
+                chrono.start(chronoName);
+                Object res = null;
+                //Object res = rcp.doBench(nbPojo);
                 chrono.pause(chronoName);
                 System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
                 chrono.reset(chronoName);

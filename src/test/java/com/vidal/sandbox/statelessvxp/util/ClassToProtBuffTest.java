@@ -1,6 +1,7 @@
 package com.vidal.sandbox.statelessvxp.util;
 
-import com.vidal.sandbox.statelessvxp.pojo.vidal.util.PackContainer;
+import com.vidal.sandbox.statelessvxp.generators.ClassToProtBuff;
+import com.vidal.sandbox.statelessvxp.pojo.factory.PackContainer;
 import org.junit.Test;
 
 public class ClassToProtBuffTest {

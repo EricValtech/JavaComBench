@@ -1,23 +1,25 @@
 package com.vidal.sandbox.statelessvxp;
 
 
+import com.vidal.sandbox.statelessvxp.bench.comunicator.BenchCommunicator;
+import com.vidal.sandbox.statelessvxp.bench.serialiser.BenchSerialiser;
+import com.vidal.sandbox.statelessvxp.pojo.PojoFactory;
+import com.vidal.sandbox.statelessvxp.pojo.factory.PackFactory;
+import com.vidal.sandbox.statelessvxp.util.ChronoPerf;
+import com.vidal.sandbox.statelessvxp.util.ClassFinder;
+import com.vidal.sandbox.statelessvxp.util.NicePrinterHelper;
+import org.apache.commons.cli.*;
+
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 
 
-import com.vidal.sandbox.statelessvxp.comunicator.BenchCommunicator;
-import com.vidal.sandbox.statelessvxp.serialiser.BenchSerialiser;
-import com.vidal.sandbox.statelessvxp.util.ClassFinder;
-import org.apache.commons.cli.*;
-
-import com.vidal.sandbox.statelessvxp.util.ChronoPerf;
-
-
 public class PerfTestStateless
 {
 
+    private static final Class<?> DEFAULT_FACTORY = PackFactory.class;
     private static CommandLine COMMAND_LINE=null;
     private static final Options OPTIONS = new Options();
     private static final Option OPT_HELP=new Option( "h","help",false, "print this message" );
@@ -38,13 +40,13 @@ public class PerfTestStateless
 
 
     //Constants
-    private static Map<String, Class<?>> PROVIDERSERIAL= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.serialiser", BenchSerialiser.class);
-    private static Map<String, Class<?>> PROVIDERCOM= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.comunicator", BenchCommunicator.class);
+    private static Map<String, Class<?>> PROVIDERSERIAL= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.bench.serialiser", BenchSerialiser.class);
+    private static Map<String, Class<?>> PROVIDERCOM= ClassFinder.makeBencnhMap("com.vidal.sandbox.statelessvxp.bench.comunicator", BenchCommunicator.class);
 
     private static String SC_SERIALISE="se";
     private static String SC_COMM="cp";
-    private static List<String> SCENARIOS= Arrays.asList(SC_SERIALISE, SC_COMM);
-    private static List<Integer> NBPOJO= Arrays.asList(1,10,100,1000,10000,100000);
+    private static List<String> SCENARIOS= Arrays.asList( SC_COMM);
+    private static List<Integer> NBPOJO= Arrays.asList(1,1,10,100,1000,10000,100000);
 
     private static String FILENAME= null;
 
@@ -192,10 +194,19 @@ public class PerfTestStateless
             for(String communicatorName : PROVIDERCOM.keySet()) {
                 Class <?> communicationClass= PROVIDERCOM.get(communicatorName);
                 BenchCommunicator communicator =  (BenchCommunicator)communicationClass.newInstance();
+                communicator.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
                 communicator.startServer();
+                communicator.startCommunication();
                 for(Integer nbPojo : NBPOJO ) {
-                    Object res = communicator.doBench(nbPojo);
+                    String chronoName = (communicator.getName());
+                    communicator.initObjects(nbPojo);
+                    chrono.start(chronoName);
+                    Object res = communicator.doBench(PackFactory.class,nbPojo);
+                    System.out.println("\t"+chronoName+" "+nbPojo+" : "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
+                    chrono.pause(chronoName);
+                    chrono.reset(chronoName);
                 }
+                communicator.stopCommunication();
                 communicator.stopServer();
             }
         }
@@ -208,12 +219,14 @@ public class PerfTestStateless
             for(String serialiserName : PROVIDERSERIAL.keySet()) {
                 Class <?> serialiserClass= PROVIDERSERIAL.get(serialiserName);
                 BenchSerialiser serialiser = (BenchSerialiser)serialiserClass.newInstance();
+                serialiser.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
                 serialiser.warmup();
                 String chronoName = (serialiser.getName());
+                serialiser.initObjects(nbPojo);
                 chrono.start(chronoName);
                 Object res = serialiser.doBench(nbPojo);
                 chrono.pause(chronoName);
-                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+res+"]");
+                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
                 chrono.reset(chronoName);
             }
         }

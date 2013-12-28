@@ -1,38 +1,32 @@
-package com.vidal.sandbox.statelessvxp.serialiser;
+package com.vidal.sandbox.statelessvxp.pojo.factory;
 
+import com.vidal.sandbox.statelessvxp.pojo.PojoFactory;
 import com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt;
 import com.vidal.sandbox.statelessvxp.pojo.vidal.*;
-import com.vidal.sandbox.statelessvxp.pojo.vidal.util.PackContainer;
-import com.vidal.sandbox.statelessvxp.pojo.vidal.util.PackFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
-public class ProtBufferSerialiser implements BenchSerialiser {
-
-    private final PackcontainerProt.PackContainer.Builder pcBuilder= PackcontainerProt.PackContainer.newBuilder();
+public class PackFactory  extends  PojoFactory<PackContainer, PackcontainerProt.Pack>{
     private final PackcontainerProt.Pack.Builder pBuilder= PackcontainerProt.Pack.newBuilder();
+
+
     @Override
-    public void warmup() throws IOException {
-        PackcontainerProt.PackContainer.Builder builder= PackcontainerProt.PackContainer.newBuilder();
-
-        Iterable<? extends PackcontainerProt.Pack> toto = createPacks(10);
-        builder.addAllList(toto);
-
-        PackcontainerProt.PackContainer bean = builder.build();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bean.writeTo(out);
-        out.close();
-
-        PackcontainerProt.PackContainer readBean = PackcontainerProt.PackContainer.parseFrom(out.toByteArray());
+    public Collection<PackContainer> create(int nbPojo) {
+        Collection<PackContainer> res = new ArrayList<PackContainer>();
+        PackContainer pc = new PackContainer();
+        pc.getList().addAll(createPackList(nbPojo,100));
+        res.add(pc);
+        return res;
     }
 
-    public Iterable<? extends PackcontainerProt.Pack> createPacks(int nbPacks) {
-        PackContainer pc = PackFactory.createPackList(nbPacks,100);
+    @Override
+    public Collection<PackcontainerProt.Pack> createProtBuff(int nbPojo) {
+        Collection<Pack> packList= PackFactory.createPackList(nbPojo,100);
         List<PackcontainerProt.Pack> res = new ArrayList<PackcontainerProt.Pack>();
-        for (Pack currPack : pc.getList()) {
+        for (Pack currPack : packList) {
             pBuilder.clear();
             pBuilder.setId(currPack.getId());
             pBuilder.setName(currPack.getName());
@@ -76,36 +70,58 @@ public class ProtBufferSerialiser implements BenchSerialiser {
         return res;
     }
 
+    public static Pack createPack(int id) {
+		Pack dto = new Pack();
+		  dto.setId( id);
+	      dto.setName("name"+id);
+	      dto.setActCode(ActCode.AAD);
+	      dto.setCip("Cip"+id);
+	      dto.setCip13("Cip13"+id);
+	      dto.setCis("CIS"+id);
+	      dto.setCommunityAgrement(true);
+	      dto.setDispensationPlace(DispensationPlace.HOSPITAL);
+	      dto.setDose("DOSE");
+	      dto.setDoseUnit("DOSEUNIT"); //10
+	      dto.setDrugInSport(true);
+	      dto.setEan("EAN");
+	      dto.setGenericType(GenericType.GENERIC);
+	      dto.setList(ListType.NARCOTIC);
+	      dto.setManufacturerPrice(10.2f);
+	      dto.setMarketStatus(MarketStatus.AVAILABLE);
+	      dto.setMaxPrescriptionDuration(PrescriptionDuration.EIGHTY_FOUR_DAYS);
+	      dto.setNarcoticPrescription(true);
+	      dto.setOffMarketDate( new Date());
+	      dto.setOnMarketDate( new Date()); //20
+	      dto.setOnFreeAccess( false);
+
+	       dto.setOtc(true);
+	       dto.setPharmacistPrice( 10.3f);
+	       dto.setPricePerDose( 10.4f);
+	       dto.setProductId( 0);
+	       dto.setPublicPrice( 100.1f);
+	       dto.setRefundingBase( 30f);
+	       dto.setRefundingRate( RefundRate._65);
+	       dto.setSafetyAlert( true);
+	       dto.setShortName("PACK SHORT NAME");           //30
+	       dto.setTfr( false);
+	       dto.setType( ProductType.ACCESSORY);
+	       dto.setUcdPrice( 5.2f);
+	       dto.setVatRate(VatRate.HIGH);
+	       dto.setVatRateValue(20f);
+	       dto.setWithoutPrescr( false);        //36
+	       
+	       
+	       return dto;
+	}
+	
+	public static Collection<Pack> createPackList(int nbPack,int startIndex) {
+		PackContainer pc = new PackContainer();
+    	for (int i = 0 ; i < nbPack; i++) {
+    		pc.getList().add(PackFactory.createPack(startIndex + i));
+    	}
+    	return pc.getList();
+		
+	}
 
 
-    @Override
-    public Object doBench(Integer nbPojo) throws IOException {
-        PackcontainerProt.PackContainer.Builder builder= PackcontainerProt.PackContainer.newBuilder();
-
-        Iterable<? extends PackcontainerProt.Pack> toto = createPacks(nbPojo);
-        builder.addAllList(toto);
-
-        PackcontainerProt.PackContainer bean = builder.build();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bean.writeTo(out);
-        out.close();
-
-        PackcontainerProt.PackContainer readBean = PackcontainerProt.PackContainer.parseFrom(out.toByteArray());
-        return out.toByteArray().length;
-    }
-
-    @Override
-    public String getName() {
-        return "ProtocolBufferSerialiser";
-    }
-
-    @Override
-    public String getShortName() {
-        return "pb";
-    }
-
-    @Override
-    public String getDescription() {
-        return "uses Protocol Buffer 2.5 with a '.proto' file (@see ClassToProtBuff)";
-    }
 }

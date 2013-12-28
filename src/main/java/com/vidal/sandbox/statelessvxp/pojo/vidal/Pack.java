@@ -1,10 +1,9 @@
 package com.vidal.sandbox.statelessvxp.pojo.vidal;
 
 
+import org.msgpack.annotation.MessagePackBeans;
 
 import java.util.Date;
-
-import org.msgpack.annotation.MessagePackBeans;
 
 
 

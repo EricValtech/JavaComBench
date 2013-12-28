@@ -1,6 +1,6 @@
 package com.vidal.sandbox.statelessvxp.util;
 
-import com.vidal.sandbox.statelessvxp.serialiser.Bench;
+import com.vidal.sandbox.statelessvxp.bench.Bench;
 
 import java.io.File;
 import java.io.IOException;

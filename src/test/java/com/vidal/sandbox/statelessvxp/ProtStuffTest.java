@@ -1,11 +1,5 @@
 package com.vidal.sandbox.statelessvxp;
 
-import java.io.IOException;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtobufIOUtil;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
@@ -13,6 +7,12 @@ import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import com.vidal.sandbox.statelessvxp.pojo.FullTypesModel;
 import com.vidal.sandbox.statelessvxp.pojo.SimpleModel;
+import org.junit.Test;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit test for simple App.

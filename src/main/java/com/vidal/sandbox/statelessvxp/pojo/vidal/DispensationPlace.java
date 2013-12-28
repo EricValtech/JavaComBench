@@ -1,10 +1,10 @@
 package com.vidal.sandbox.statelessvxp.pojo.vidal;
 
+import org.msgpack.annotation.MessagePackOrdinalEnum;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.msgpack.annotation.MessagePackOrdinalEnum;
 
 @MessagePackOrdinalEnum
 public enum DispensationPlace implements Keyed {

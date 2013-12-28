@@ -1,18 +1,17 @@
 package com.vidal.sandbox.statelessvxp;
 
+import com.vidal.sandbox.statelessvxp.bench.serialiser.ProtBufferSerialiser;
+import com.vidal.sandbox.statelessvxp.pojo.factory.PackFactory;
 import com.vidal.sandbox.statelessvxp.pojo.protbufgen.FulltypesmodelProt;
 import com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt;
 import com.vidal.sandbox.statelessvxp.pojo.protbufgen.SimplemodelProt;
-import com.vidal.sandbox.statelessvxp.serialiser.ProtBufferSerialiser;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Unit test for simple App.
@@ -77,7 +76,7 @@ public class ProtBuffTest {
     public void testPack() throws IOException {
         PackcontainerProt.PackContainer.Builder builder= PackcontainerProt.PackContainer.newBuilder();
         ProtBufferSerialiser ser = new ProtBufferSerialiser();
-        Iterable<? extends PackcontainerProt.Pack> toto = ser.createPacks(10);
+        Iterable<? extends PackcontainerProt.Pack> toto = new PackFactory().createProtBuff(10);
         builder.addAllList(toto);
 
         PackcontainerProt.PackContainer bean = builder.build();

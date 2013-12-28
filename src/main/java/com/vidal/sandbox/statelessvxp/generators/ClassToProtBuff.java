@@ -1,4 +1,4 @@
-package com.vidal.sandbox.statelessvxp.util;
+package com.vidal.sandbox.statelessvxp.generators;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;

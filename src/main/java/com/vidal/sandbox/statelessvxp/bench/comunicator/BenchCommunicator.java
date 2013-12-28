@@ -1,17 +1,40 @@
-package com.vidal.sandbox.statelessvxp.comunicator;
+package com.vidal.sandbox.statelessvxp.bench.comunicator;
 
 
-import com.vidal.sandbox.statelessvxp.serialiser.Bench;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vidal.sandbox.statelessvxp.bench.Bench;
+import com.vidal.sandbox.statelessvxp.pojo.PojoFactory;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Method;
+import java.util.Collection;
 
-public abstract class  BenchCommunicator  implements  Bench {
+public abstract class  BenchCommunicator extends Bench {
+
+     private Process serverProcess=null;
+     Thread processInputReader=null;
+
     public abstract Class<?> getServerClass();
+    public abstract void startCommunication()throws Exception;
+    public abstract Object doBench(Class<? extends PojoFactory> factory, Integer  nbPojo) throws Exception;
+    public abstract void stopCommunication()throws Exception;
 
-    private Process serverProcess=null;
 
+    @Override
+    public void initObjects(int nbObj) throws Exception {
+        super.initObjects(nbObj);
+        //Use JSON serializer
+        Object res=getToSerialise();
+        if (res instanceof Collection) res = ((Collection)res).iterator().next();
+        OutputStream out = new ByteArrayOutputStream();
+        new ObjectMapper().writeValue(out,res);
+        setToSerialise(out.toString()+"\n");
+    }
 
     public boolean startServer() {
         Method mainMethod = null;
@@ -19,8 +42,11 @@ public abstract class  BenchCommunicator  implements  Bench {
         try {
             String javaCommand = makeJavaCommand(System.getProperty("java.home"));
             javaCommand+= " "+getServerClass().getName();
-            System.out.println("STARTING server : "+javaCommand);
+            ///System.out.println("STARTING server : "+javaCommand);
             setServerProcess(Runtime.getRuntime().exec(javaCommand));
+            processInputReader = new Thread(new ProcessRunnable());
+            processInputReader.start();
+
         }
         catch(Exception e) {
 
@@ -41,6 +67,7 @@ public abstract class  BenchCommunicator  implements  Bench {
                 Thread.sleep(1000);
                 exitValue=getServerProcess().exitValue();
             }
+            processInputReader.interrupt();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -54,6 +81,7 @@ public abstract class  BenchCommunicator  implements  Bench {
     public void setServerProcess(Process serverProcess) {
         this.serverProcess = serverProcess;
     }
+
 
     //private stuff
     private String makeJavaCommand(String javaHome) {
@@ -80,4 +108,17 @@ public abstract class  BenchCommunicator  implements  Bench {
     }
 
 
+    private class ProcessRunnable implements Runnable {
+        public void run() {
+          try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(getServerProcess().getInputStream()));
+            String line;
+            while ((line = input.readLine()) != null) {
+                System.out.println("[FROM SERVER] "+line);
+            }
+            input.close();
+           }
+           catch(Exception e) { e.printStackTrace(); }
+        }
+    }
 }

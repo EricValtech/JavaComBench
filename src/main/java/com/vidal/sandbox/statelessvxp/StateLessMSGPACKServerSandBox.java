@@ -1,11 +1,10 @@
 package com.vidal.sandbox.statelessvxp;
 
-import java.net.ServerSocket;
-import java.net.Socket;
-
+import com.vidal.sandbox.statelessvxp.pojo.factory.PackContainer;
 import org.msgpack.MessagePack;
 
-import com.vidal.sandbox.statelessvxp.pojo.vidal.util.PackContainer;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class StateLessMSGPACKServerSandBox {
 	public static void main(String[] args) throws Exception {

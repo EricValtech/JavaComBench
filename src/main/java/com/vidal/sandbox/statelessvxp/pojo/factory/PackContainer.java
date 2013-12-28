@@ -1,11 +1,10 @@
-package com.vidal.sandbox.statelessvxp.pojo.vidal.util;
+package com.vidal.sandbox.statelessvxp.pojo.factory;
+
+import com.vidal.sandbox.statelessvxp.pojo.vidal.Pack;
+import org.msgpack.annotation.Message;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.msgpack.annotation.Message;
-
-import com.vidal.sandbox.statelessvxp.pojo.vidal.Pack;
 
 @Message
 public class PackContainer {

@@ -1,13 +1,14 @@
 package com.vidal.sandbox.statelessvxp;
 
-import java.io.IOException;
-
-import org.junit.Test;
-import org.msgpack.MessagePack;
-import static org.junit.Assert.*;
-
 import com.vidal.sandbox.statelessvxp.pojo.FullTypesModel;
 import com.vidal.sandbox.statelessvxp.pojo.SimpleModel;
+import org.junit.Test;
+import org.msgpack.MessagePack;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit test for simple App.

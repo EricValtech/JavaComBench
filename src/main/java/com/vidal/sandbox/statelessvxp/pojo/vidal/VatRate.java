@@ -1,10 +1,10 @@
 package com.vidal.sandbox.statelessvxp.pojo.vidal;
 
-import static java.util.Arrays.sort;
+import org.msgpack.annotation.MessagePackOrdinalEnum;
 
 import java.util.Comparator;
 
-import org.msgpack.annotation.MessagePackOrdinalEnum;
+import static java.util.Arrays.sort;
 
 @MessagePackOrdinalEnum
 public enum VatRate implements Keyed {

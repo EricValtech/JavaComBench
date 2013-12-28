@@ -1,10 +1,10 @@
 package com.vidal.sandbox.statelessvxp.pojo;
 
+import org.msgpack.annotation.Message;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.msgpack.annotation.Message;
 
 @Message
 public class FullTypesModel {

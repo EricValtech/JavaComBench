@@ -53,7 +53,20 @@
           <artifactId>protobuf-java</artifactId>
           <version>2.5.0</version>
       </dependency>
-    <dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-jdk-http</artifactId>
+          <version>2.5</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-client</artifactId>
+          <version>2.5</version>
+      </dependency>
+
+
+
+      <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>

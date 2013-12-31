@@ -50,7 +50,7 @@ public class PerfTestStateless
     private static String SC_SERIALISE="se";
     private static String SC_COMM="co";
     private static String SC_RCP="rc";
-    private static List<String> SCENARIOS= Arrays.asList(SC_COMM,SC_SERIALISE, SC_RCP);
+    private static List<String> SCENARIOS= Arrays.asList( SC_RCP);
     private static List<Integer> NBPOJO= Arrays.asList(1,1,10,100,1000,10000,100000);
 
     private static String FILENAME= null;
@@ -209,6 +209,29 @@ public class PerfTestStateless
         System.out.println();
     }
 
+    private static void doBenchSerialise(ChronoPerf chrono) throws Exception {
+        if (PROVIDERSERIAL.keySet() ==null || PROVIDERSERIAL.keySet().size()==0) {
+            System.out.println("No Serialization provider found...");
+            return;
+        }
+        for(Integer nbPojo : NBPOJO ) {
+            System.out.print("\nTime for " + FORMATTER.format(nbPojo) + " : ");
+            for(String serialiserName : PROVIDERSERIAL.keySet()) {
+                Class <?> serialiserClass= PROVIDERSERIAL.get(serialiserName);
+                BenchSerialiser serialiser = (BenchSerialiser)serialiserClass.newInstance();
+                serialiser.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
+                serialiser.warmup();
+                String chronoName = (serialiser.getName());
+                serialiser.initObjects(nbPojo);
+                chrono.start(chronoName);
+                Object res = serialiser.doBench(nbPojo);
+                chrono.pause(chronoName);
+                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
+                chrono.reset(chronoName);
+            }
+        }
+    }
+
     private static void doBenchCommunicator(ChronoPerf chrono) throws Exception {
         if (PROVIDERCOM.keySet() ==null || PROVIDERCOM.keySet().size()==0) {
             System.out.println("No communication provider found...");
@@ -236,51 +259,37 @@ public class PerfTestStateless
         }
     }
 
-    private static void doBenchSerialise(ChronoPerf chrono) throws Exception {
-        if (PROVIDERSERIAL.keySet() ==null || PROVIDERSERIAL.keySet().size()==0) {
-            System.out.println("No Serialization provider found...");
-            return;
-        }
-        for(Integer nbPojo : NBPOJO ) {
-            System.out.print("\nTime for " + FORMATTER.format(nbPojo) + " : ");
-            for(String serialiserName : PROVIDERSERIAL.keySet()) {
-                Class <?> serialiserClass= PROVIDERSERIAL.get(serialiserName);
-                BenchSerialiser serialiser = (BenchSerialiser)serialiserClass.newInstance();
-                serialiser.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
-                serialiser.warmup();
-                String chronoName = (serialiser.getName());
-                serialiser.initObjects(nbPojo);
-                chrono.start(chronoName);
-                Object res = serialiser.doBench(nbPojo);
-                chrono.pause(chronoName);
-                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
-                chrono.reset(chronoName);
-            }
-        }
-    }
+
 
     private static void doBenchRCP(ChronoPerf chrono) throws Exception {
         if (PROVIDERRCP.keySet() ==null || PROVIDERRCP.keySet().size()==0) {
             System.out.println("No RCP provider found...");
             return;
         }
-        for(Integer nbPojo : NBPOJO ) {
-            System.out.print("\nTime for " + FORMATTER.format(nbPojo) + " : ");
-            for(String serialiserName : PROVIDERRCP.keySet()) {
-                Class <?> serialiserClass= PROVIDERRCP.get(serialiserName);
-                BenchRCP rcp= (BenchRCP)serialiserClass.newInstance();
-                rcp.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
-                //rcp.warmup();
+        for(String rcpName : PROVIDERRCP.keySet()) {
+            Class <?> rcpClass= PROVIDERRCP.get(rcpName);
+            BenchRCP rcp =  (BenchRCP)rcpClass.newInstance();
+            rcp.setFactory((Class<? extends PojoFactory>) DEFAULT_FACTORY);
+            if (! rcp.startServer() ) { System.out.println(rcp.getName()+"Test skipped server not launched"); continue;}
+            System.out.println("STARTING tests for "+rcp.getName()+"("+ rcp.getShortName()+") :"+rcp.getDescription());
+            rcp.serverLookup();
+
+            for(Integer nbPojo : NBPOJO ) {
+                System.out.print("\nTime for " + FORMATTER.format(nbPojo) + " : ");
                 String chronoName = (rcp.getName());
                 rcp.initObjects(nbPojo);
                 chrono.start(chronoName);
-                Object res = null;
-                //Object res = rcp.doBench(nbPojo);
+                Object res = rcp.doBench();
                 chrono.pause(chronoName);
-                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ NicePrinterHelper.printMemory((Integer)res)+"]");
+                System.out.print("\t"+chronoName+": "+chrono.getFormattedTime(chronoName)+" ["+ res+"]");
                 chrono.reset(chronoName);
+
+                }
+            rcp.stopServer();
+            System.out.println();
             }
-        }
+
+
     }
 
 /*

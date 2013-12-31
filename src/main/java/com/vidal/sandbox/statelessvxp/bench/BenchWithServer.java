@@ -1,16 +1,11 @@
 package com.vidal.sandbox.statelessvxp.bench;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Method;
-import java.util.Collection;
 
 public abstract class BenchWithServer extends Bench {
 
@@ -20,16 +15,7 @@ public abstract class BenchWithServer extends Bench {
     public abstract Class<?> getServerClass();
 
 
-    @Override
-    public void initObjects(int nbObj) throws Exception {
-        super.initObjects(nbObj);
-        //Use JSON serializer
-        Object res=getToSerialise();
-        if (res instanceof Collection) res = ((Collection)res).iterator().next();
-        OutputStream out = new ByteArrayOutputStream();
-        new ObjectMapper().writeValue(out,res);
-        setToSerialise(out.toString()+"\n");
-    }
+
 
     public boolean startServer() {
         Method mainMethod = null;

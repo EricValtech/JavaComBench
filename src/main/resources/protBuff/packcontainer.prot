@@ -1,3 +1,5 @@
+option java_generic_services = true;
+
 package com.vidal.sandbox.statelessvxp.pojo.protbufgen;
 message PackContainer {
 	repeated Pack list = 1;
@@ -133,4 +135,11 @@ message Pack {
 	required VatRate vatRate = 34;
 	required float vatRateValue=35;
 	required bool withoutPrescr=36;
+ }
+
+message RCPReturn {
+  required int64 nbBytes =1;
+}
+service TestJCBService {
+   rpc testJCB (PackContainer) returns (RCPReturn);
  }

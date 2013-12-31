@@ -6151,6 +6151,642 @@ public final class PackcontainerProt {
     // @@protoc_insertion_point(class_scope:com.vidal.sandbox.statelessvxp.pojo.protbufgen.Pack)
   }
 
+  public interface RCPReturnOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required int64 nbBytes = 1;
+    /**
+     * <code>required int64 nbBytes = 1;</code>
+     */
+    boolean hasNbBytes();
+    /**
+     * <code>required int64 nbBytes = 1;</code>
+     */
+    long getNbBytes();
+  }
+  /**
+   * Protobuf type {@code com.vidal.sandbox.statelessvxp.pojo.protbufgen.RCPReturn}
+   */
+  public static final class RCPReturn extends
+      com.google.protobuf.GeneratedMessage
+      implements RCPReturnOrBuilder {
+    // Use RCPReturn.newBuilder() to construct.
+    private RCPReturn(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private RCPReturn(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RCPReturn defaultInstance;
+    public static RCPReturn getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public RCPReturn getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private RCPReturn(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              nbBytes_ = input.readInt64();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.class, com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<RCPReturn> PARSER =
+        new com.google.protobuf.AbstractParser<RCPReturn>() {
+      public RCPReturn parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RCPReturn(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RCPReturn> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required int64 nbBytes = 1;
+    public static final int NBBYTES_FIELD_NUMBER = 1;
+    private long nbBytes_;
+    /**
+     * <code>required int64 nbBytes = 1;</code>
+     */
+    public boolean hasNbBytes() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required int64 nbBytes = 1;</code>
+     */
+    public long getNbBytes() {
+      return nbBytes_;
+    }
+
+    private void initFields() {
+      nbBytes_ = 0L;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasNbBytes()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, nbBytes_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, nbBytes_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.vidal.sandbox.statelessvxp.pojo.protbufgen.RCPReturn}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturnOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.class, com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.Builder.class);
+      }
+
+      // Construct using com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        nbBytes_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_descriptor;
+      }
+
+      public com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn getDefaultInstanceForType() {
+        return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance();
+      }
+
+      public com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn build() {
+        com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn buildPartial() {
+        com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn result = new com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.nbBytes_ = nbBytes_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn) {
+          return mergeFrom((com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn other) {
+        if (other == com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance()) return this;
+        if (other.hasNbBytes()) {
+          setNbBytes(other.getNbBytes());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasNbBytes()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required int64 nbBytes = 1;
+      private long nbBytes_ ;
+      /**
+       * <code>required int64 nbBytes = 1;</code>
+       */
+      public boolean hasNbBytes() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required int64 nbBytes = 1;</code>
+       */
+      public long getNbBytes() {
+        return nbBytes_;
+      }
+      /**
+       * <code>required int64 nbBytes = 1;</code>
+       */
+      public Builder setNbBytes(long value) {
+        bitField0_ |= 0x00000001;
+        nbBytes_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int64 nbBytes = 1;</code>
+       */
+      public Builder clearNbBytes() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        nbBytes_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.vidal.sandbox.statelessvxp.pojo.protbufgen.RCPReturn)
+    }
+
+    static {
+      defaultInstance = new RCPReturn(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.vidal.sandbox.statelessvxp.pojo.protbufgen.RCPReturn)
+  }
+
+  /**
+   * Protobuf service {@code com.vidal.sandbox.statelessvxp.pojo.protbufgen.TestJCBService}
+   */
+  public static abstract class TestJCBService
+      implements com.google.protobuf.Service {
+    protected TestJCBService() {}
+
+    public interface Interface {
+      /**
+       * <code>rpc testJCB(.com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackContainer) returns (.com.vidal.sandbox.statelessvxp.pojo.protbufgen.RCPReturn);</code>
+       */
+      public abstract void testJCB(
+          com.google.protobuf.RpcController controller,
+          com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer request,
+          com.google.protobuf.RpcCallback<com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn> done);
+
+    }
+
+    public static com.google.protobuf.Service newReflectiveService(
+        final Interface impl) {
+      return new TestJCBService() {
+        @java.lang.Override
+        public  void testJCB(
+            com.google.protobuf.RpcController controller,
+            com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer request,
+            com.google.protobuf.RpcCallback<com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn> done) {
+          impl.testJCB(controller, request, done);
+        }
+
+      };
+    }
+
+    public static com.google.protobuf.BlockingService
+        newReflectiveBlockingService(final BlockingInterface impl) {
+      return new com.google.protobuf.BlockingService() {
+        public final com.google.protobuf.Descriptors.ServiceDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+
+        public final com.google.protobuf.Message callBlockingMethod(
+            com.google.protobuf.Descriptors.MethodDescriptor method,
+            com.google.protobuf.RpcController controller,
+            com.google.protobuf.Message request)
+            throws com.google.protobuf.ServiceException {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.callBlockingMethod() given method descriptor for " +
+              "wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return impl.testJCB(controller, (com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer)request);
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+        public final com.google.protobuf.Message
+            getRequestPrototype(
+            com.google.protobuf.Descriptors.MethodDescriptor method) {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.getRequestPrototype() given method " +
+              "descriptor for wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer.getDefaultInstance();
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+        public final com.google.protobuf.Message
+            getResponsePrototype(
+            com.google.protobuf.Descriptors.MethodDescriptor method) {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.getResponsePrototype() given method " +
+              "descriptor for wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance();
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+      };
+    }
+
+    /**
+     * <code>rpc testJCB(.com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackContainer) returns (.com.vidal.sandbox.statelessvxp.pojo.protbufgen.RCPReturn);</code>
+     */
+    public abstract void testJCB(
+        com.google.protobuf.RpcController controller,
+        com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer request,
+        com.google.protobuf.RpcCallback<com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn> done);
+
+    public static final
+        com.google.protobuf.Descriptors.ServiceDescriptor
+        getDescriptor() {
+      return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.getDescriptor().getServices().get(0);
+    }
+    public final com.google.protobuf.Descriptors.ServiceDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public final void callMethod(
+        com.google.protobuf.Descriptors.MethodDescriptor method,
+        com.google.protobuf.RpcController controller,
+        com.google.protobuf.Message request,
+        com.google.protobuf.RpcCallback<
+          com.google.protobuf.Message> done) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.callMethod() given method descriptor for wrong " +
+          "service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          this.testJCB(controller, (com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer)request,
+            com.google.protobuf.RpcUtil.<com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn>specializeCallback(
+              done));
+          return;
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public final com.google.protobuf.Message
+        getRequestPrototype(
+        com.google.protobuf.Descriptors.MethodDescriptor method) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.getRequestPrototype() given method " +
+          "descriptor for wrong service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer.getDefaultInstance();
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public final com.google.protobuf.Message
+        getResponsePrototype(
+        com.google.protobuf.Descriptors.MethodDescriptor method) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.getResponsePrototype() given method " +
+          "descriptor for wrong service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          return com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance();
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public static Stub newStub(
+        com.google.protobuf.RpcChannel channel) {
+      return new Stub(channel);
+    }
+
+    public static final class Stub extends com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.TestJCBService implements Interface {
+      private Stub(com.google.protobuf.RpcChannel channel) {
+        this.channel = channel;
+      }
+
+      private final com.google.protobuf.RpcChannel channel;
+
+      public com.google.protobuf.RpcChannel getChannel() {
+        return channel;
+      }
+
+      public  void testJCB(
+          com.google.protobuf.RpcController controller,
+          com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer request,
+          com.google.protobuf.RpcCallback<com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn> done) {
+        channel.callMethod(
+          getDescriptor().getMethods().get(0),
+          controller,
+          request,
+          com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance(),
+          com.google.protobuf.RpcUtil.generalizeCallback(
+            done,
+            com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.class,
+            com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance()));
+      }
+    }
+
+    public static BlockingInterface newBlockingStub(
+        com.google.protobuf.BlockingRpcChannel channel) {
+      return new BlockingStub(channel);
+    }
+
+    public interface BlockingInterface {
+      public com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn testJCB(
+          com.google.protobuf.RpcController controller,
+          com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer request)
+          throws com.google.protobuf.ServiceException;
+    }
+
+    private static final class BlockingStub implements BlockingInterface {
+      private BlockingStub(com.google.protobuf.BlockingRpcChannel channel) {
+        this.channel = channel;
+      }
+
+      private final com.google.protobuf.BlockingRpcChannel channel;
+
+      public com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn testJCB(
+          com.google.protobuf.RpcController controller,
+          com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.PackContainer request)
+          throws com.google.protobuf.ServiceException {
+        return (com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn) channel.callBlockingMethod(
+          getDescriptor().getMethods().get(0),
+          controller,
+          request,
+          com.vidal.sandbox.statelessvxp.pojo.protbufgen.PackcontainerProt.RCPReturn.getDefaultInstance());
+      }
+
+    }
+
+    // @@protoc_insertion_point(class_scope:com.vidal.sandbox.statelessvxp.pojo.protbufgen.TestJCBService)
+  }
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_PackContainer_descriptor;
   private static
@@ -6161,6 +6797,11 @@ public final class PackcontainerProt {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_Pack_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6256,7 +6897,12 @@ public final class PackcontainerProt {
       "Type_HOMEOPATHIC\020\006\022\032\n\026ProductType_BALNEO" +
       "LOGY\020\007\"_\n\007VatRate\022\022\n\016VatRate_NORMAL\020\000\022\023\n" +
       "\017VatRate_REDUCED\020\001\022\031\n\025VatRate_SUPER_REDU" +
-      "CED\020\002\022\020\n\014VatRate_HIGH\020\003"
+      "CED\020\002\022\020\n\014VatRate_HIGH\020\003\"\034\n\tRCPReturn\022\017\n\007" +
+      "nbBytes\030\001 \002(\0032\226\001\n\016TestJCBService\022\203\001\n\007tes" +
+      "tJCB\022=.com.vidal.sandbox.statelessvxp.po" +
+      "jo.protbufgen.PackContainer\0329.com.vidal.",
+      "sandbox.statelessvxp.pojo.protbufgen.RCP" +
+      "ReturnB\003\210\001\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6275,6 +6921,12 @@ public final class PackcontainerProt {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_Pack_descriptor,
               new java.lang.String[] { "ActCode", "Cip", "Cip13", "Cis", "CommunityAgrement", "DispensationPlace", "Dose", "DoseUnit", "DrugInSport", "Ean", "GenericType", "Id", "List", "ManufacturerPrice", "MarketStatus", "MaxPrescriptionDuration", "Name", "NarcoticPrescription", "OffMarketDate", "OnFreeAccess", "OnMarketDate", "Otc", "PharmacistPrice", "PricePerDose", "ProductId", "PublicPrice", "RefundingBase", "RefundingRate", "SafetyAlert", "ShortName", "Tfr", "Type", "UcdPrice", "VatRate", "VatRateValue", "WithoutPrescr", });
+          internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_vidal_sandbox_statelessvxp_pojo_protbufgen_RCPReturn_descriptor,
+              new java.lang.String[] { "NbBytes", });
           return null;
         }
       };
